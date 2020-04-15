@@ -19,33 +19,7 @@ public class doctorService {
 	}
 	
 
-	public String insertDoctors(Doctor doctor) {
-
-		
-		
-		String query = " insert into doctor(`doctorId`,`doctorName`,`specialization`,`phoneNo`,`email`)"
-				+ " values (?, ?, ?, ?, ?)";
-
-		String output;
-		try {
-
-			PreparedStatement preparedStmt = con.prepareStatement(query);
-			preparedStmt.setString(1, doctor.getdoctorId());
-			preparedStmt.setString(2, doctor.getdoctorName());
-			preparedStmt.setString(3, doctor.getSpecialization());
-			preparedStmt.setInt(4, doctor.getPhone());
-			preparedStmt.setString(5, doctor.getEmail());
-			preparedStmt.execute();
-
-			output = "Inserted successfully";
-
-		} catch (SQLException e) {
-			output = "Error while inserting the doctor.";
-			System.err.println(e.getMessage());
-		}
-
-		return output;
-	}
+	
 
 	public String readDoctors() {
 		String output = "";
@@ -89,63 +63,6 @@ public class doctorService {
 		return output;
 	}
 
-	public String updateDoctors(Doctor doctor) {
-		
-		
-		String output = "";
-		try {
-			if (con == null) {
-				return "Error while connecting to the database for updating.";
-			}
-			String query = "UPDATE doctor SET doctorName=?,specialization=?,phoneNo=?,email=?WHERE doctorId=?";
-			
-			PreparedStatement preparedStmt = con.prepareStatement(query);
-			// binding values
-			preparedStmt.setString(1, doctor.getdoctorName());
-			preparedStmt.setString(2, doctor.getSpecialization());
-			preparedStmt.setInt(3, doctor.getPhone());
-			preparedStmt.setString(4, doctor.getEmail());
-			preparedStmt.setString(5, doctor.getdoctorId());
-			// execute the statement
-			preparedStmt.execute();
-			con.close();
-			output = "Updated successfully";
-		} catch (Exception e) {
-			output = "Error while updating the Doctors.";
-			System.err.println(e.getMessage());
-		}
-		return output;
-	}
-
-	public String deleteDoctors(Doctor doctor) {
-		
-		
-		String output="";
-
-		try {
-			if (con == null) {
-				return "Error while connecting to the database for deleting.";
-			}
-			
-			String query = "delete from doctor where doctorId=?";
-
-			
-			// create a prepared statement
-
-			PreparedStatement preparedStmt = con.prepareStatement(query);
-			// binding values
-			preparedStmt.setString(1, doctor.getdoctorId());
-			// execute the statement
-			preparedStmt.execute();
-			con.close();
-			output = "Deleted successfully";
-			
-			
-		} catch (Exception e) {
-			output = "Error while deleting the Doctors.";
-			System.err.println(e.getMessage());
-		}
-		return output;
-	}
+	
 
 }
