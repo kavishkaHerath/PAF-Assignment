@@ -11,8 +11,6 @@ import com.paf.utils.DBconnection;
 
 
 
-
-
 public class userService {
 	Connection con = null;
 	
@@ -21,11 +19,13 @@ public class userService {
 		con = DBconnection.connecter();
 		} 
 		
+	
+		
 		
 		public String readUsers()
 		{	
 			String output="";
-//html table  display
+			//html table  display
 			output = "<table border=\"1\"><tr><th>User ID</th><th>Frist Name</th><th>Last Name</th><th>Age</th>"
 					+ "<th>Gender</th><th>email</th><th>Phone</th><th>Update</th><th>Remove</th></tr>";
 			
@@ -34,9 +34,9 @@ public class userService {
 			try {
 					Statement statement = con.createStatement();
 					ResultSet result = statement.executeQuery(query);
-//	Statement stmt = db.connection.createStatement();
+					//	Statement stmt = db.connection.createStatement();
 						
-// iterate through the rows in the result set
+					// iterate through the rows in the result set
 			while (result.next()) {
 					String Pid = result.getString("Pid");
 					String Fname = result.getString("Fname");
@@ -46,7 +46,7 @@ public class userService {
 					String email = result.getString("email");
 					int Phone = result.getInt("Phone");
 								
-// Add into the html table
+					// Add into the html table
 						output += "<tr><td>" + Pid + "</td>";
 						output += "<td>" + Fname + "</td>"; 
 						output += "<td>" + Lname + "</td>"; 
@@ -61,7 +61,7 @@ public class userService {
 					 + " value=\"" + Pid + "\">" + "</form></td></tr>";
 					 
 			} 
-// Complete the html table
+			// Complete the html table
 					 output += "</table>";
 					 }
 					catch (Exception e)
@@ -71,10 +71,36 @@ public class userService {
 					 }
 					return output; 
 				}
+
+		
+		public String deleteUser(User user){
+			String query = "delete from user where Pid=?";
+			String output;
 			
+			
+			try {
+				
+		 if (con == null){
+			 return "Error while connecting to the database for deleting."; }
+		 // create a prepared statement
+		 
+		 PreparedStatement preparedStatement = con.prepareStatement(query);
+		 // binding values
+		 preparedStatement.setString(1, user.getPid());
+		 // execute the statement
+		 preparedStatement.execute();
+		 con.close();
+		 output = "Deleted successfully";
+		 }catch (Exception e){
+		 output = "Error while deleting the User.";
+		 System.err.println(e.getMessage());
+		 }
+		 return output;
+		 }
 		
-		}
 		
+				
+}
 	
 	
 

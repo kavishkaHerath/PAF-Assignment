@@ -15,8 +15,6 @@ import com.paf.service.userService;
 
 //For XML
 
-
-
 @Path("/Users")
 public class userResource {
 	User userObj = new User();
@@ -29,6 +27,34 @@ public class userResource {
 		
 		String output=userobj.readUsers();
 		return output;
-		}	
+		}
+
+	
+	
+	@DELETE
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String deleteItem(String userData){
+	//Convert the input string to an XML document
+	
+	JsonObject userObject = new JsonParser().parse(userData).getAsJsonObject();
+	
+	//Document doc = Jsoup.parse(userData, "", Parser.xmlParser());
+	
+	
+	String Pid = userObject.get("Pid").getAsString();
+
+	userService userObject2 = new userService();
+	 userObj.setPid(Pid);
+	
+	 String output = userObject2.deleteUser(userObj);
+	return output;
+	}
+	
+	
+	
+	
+	
 	
 }
