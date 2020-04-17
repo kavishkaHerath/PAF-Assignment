@@ -30,6 +30,39 @@ public class userResource {
 		}
 
 	
+	@POST
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String insertDoctors(String userData){
+	
+		JsonObject userObject = new JsonParser().parse(userData).getAsJsonObject();
+		
+		 String Pid = userObject.get("Pid").getAsString();
+		 String Fname = userObject.get("Fname").getAsString();
+		 String Lname = userObject.get("Lname").getAsString();
+		 Integer Age = userObject.get("Age").getAsInt();
+		 String Gender = userObject.get("Gender").getAsString();
+		 String email = userObject.get("email").getAsString();
+		 Integer Phone = userObject.get("Phone").getAsInt();
+	
+		 userService userObject2 = new userService();
+		 
+		 userObj.setPid(Pid);
+		 userObj.setFname(Fname);
+		 userObj.setLname(Lname);
+		 userObj.setAge(Age);
+		 userObj.setGender(Gender);
+		 userObj.setEmail(email);
+		 userObj.setPhone(Phone);
+		
+		 String output = userObject2.insertUser(userObj);
+			return output;
+		
+		
+	}
+	
+	
 	
 	@DELETE
 	@Path("/")

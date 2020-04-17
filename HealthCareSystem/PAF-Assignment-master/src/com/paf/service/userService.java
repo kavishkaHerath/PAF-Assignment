@@ -71,6 +71,36 @@ public class userService {
 					 }
 					return output; 
 				}
+		
+		
+		public String insertUser(User user) {
+			 
+			  String query = " insert into user(`Pid`,`Fname`,`Lname`,`Age`,`Gender`,`email`,`Phone`)"
+					  + " values (?, ?, ?, ?, ?, ?, ?)";
+			  
+		 String output;
+			try {	
+					PreparedStatement preparedStatement = con.prepareStatement(query); 
+					preparedStatement.setString(1, user.getPid());
+					preparedStatement.setString(2, user.getFname());
+					preparedStatement.setString(3, user.getLname());
+					preparedStatement.setInt(4,  user.getAge());
+					preparedStatement.setString(5, user.getGender());
+					preparedStatement.setString(6, user.getEmail()); 
+					preparedStatement.setInt(7, user.getPhone()); 
+					preparedStatement.execute();
+					 con.close();
+				  output = "Inserted successfully";
+				
+			} catch (SQLException e) {
+			    output = "Error while inserting the user.";
+				System.err.println(e.getMessage());
+			}
+			
+			return output;
+		}
+		
+		
 
 		
 		public String deleteUser(User user){
