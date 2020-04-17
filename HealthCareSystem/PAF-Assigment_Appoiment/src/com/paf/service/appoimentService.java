@@ -1,8 +1,12 @@
 package com.paf.service;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+
+import com.paf.model.Appoiment;
 import com.paf.utils.DBconnection;
 
 
@@ -17,6 +21,33 @@ public class appoimentService {
 		con = DBconnection.connecter();
 		} 
 		
+	public String insertAppoiment(Appoiment appoiment) {
+		 
+		  String query = " insert into appoiment(`AId`,`Pid`,`doctorId`,`hosptlId`,`date`,`time`,`charge`)"
+				  + " values (?, ?, ?, ?, ?, ?, ?)";
+		  
+	 String output;
+		try {	
+				PreparedStatement preparedStatement = con.prepareStatement(query); 
+				
+				preparedStatement.setString(1, appoiment.getAId());
+				preparedStatement.setString(2, appoiment.getPid());
+				preparedStatement.setString(3, appoiment.getDoctorId());
+				preparedStatement.setString(4,  appoiment.getHosptlId());
+				preparedStatement.setString(5, appoiment.getDate());
+				preparedStatement.setString(6, appoiment.getTime()); 
+				preparedStatement.setFloat(7, appoiment.getCharge()); 
+				preparedStatement.execute();
+				 con.close();
+			  output = "Inserted successfully";
+			
+		} catch (SQLException e) {
+		    output = "Error while inserting the Appoiment.";
+			System.err.println(e.getMessage());
+		}
+		
+		return output;
+	}
 		
 		public String readAppoiment(){	
 			String output="";
