@@ -20,7 +20,39 @@ public class doctorService {
 	
 
 	
+		public String insertDoctors(Doctor doctor) {
 
+
+		String output;
+		try {
+			Connection con = DBconnection.connecter();
+			
+			if (con == null) {
+				return "Error while connecting to the database for inserting.";
+			}
+
+			
+			
+			String query = " insert into doctor(`doctorId`,`doctorName`,`specialization`,`phoneNo`,`email`)"
+					+ " values (?, ?, ?, ?, ?)";
+
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			preparedStmt.setString(1, doctor.getdoctorId());
+			preparedStmt.setString(2, doctor.getdoctorName());
+			preparedStmt.setString(3, doctor.getSpecialization());
+			preparedStmt.setInt(4, doctor.getPhone());
+			preparedStmt.setString(5, doctor.getEmail());
+			preparedStmt.execute();
+
+			output = "Inserted successfully";
+
+		} catch (SQLException e) {
+			output = "Error while inserting the doctor.";
+			System.err.println(e.getMessage());
+		}
+
+		return output;
+	}
 	public String readDoctors() {
 		String output = "";
 		// Prepare the html table to be displayed
@@ -62,6 +94,7 @@ public class doctorService {
 		}
 		return output;
 	}
+	
 
 	
 
