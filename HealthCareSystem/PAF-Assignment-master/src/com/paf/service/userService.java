@@ -101,6 +101,38 @@ public class userService {
 		}
 		
 		
+public String updateUser(User user){
+			
+			String query = "UPDATE user SET Fname=?,Lname=?,Age=?,Gender=?,email=?,Phone=? WHERE Pid=?";
+			
+			String output;
+			try {
+				if(con == null) {
+					return "Error while connecting to the database for updating";
+				}
+				PreparedStatement preparedStatement = con.prepareStatement(query);
+			 
+				preparedStatement.setString(1, user.getFname());
+				preparedStatement.setString(2, user.getLname());
+				preparedStatement.setInt(3, user.getAge());
+				preparedStatement.setString(4, user.getGender());
+				preparedStatement.setString(5, user.getEmail()); 
+				preparedStatement.setInt(6, user.getPhone()); 
+				preparedStatement.setString(7, user.getPid());
+				
+				preparedStatement.execute();
+				con.close();
+				output = "Updated successfully";
+			}
+			 catch (Exception e)
+			 {
+			 output = "Error while updating the User.";
+			 System.err.println(e.getMessage());
+			 }
+			 return output;
+			
+		}
+		
 
 		
 		public String deleteUser(User user){

@@ -63,6 +63,38 @@ public class userResource {
 	}
 	
 	
+	@PUT
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String updateUser(String userData)
+	{
+	//Convert the input string to a JSON object
+	 JsonObject userObject = new JsonParser().parse(userData).getAsJsonObject();
+	//Read the values from the JSON object
+	 String Pid = userObject.get("Pid").getAsString();
+	 String Fname = userObject.get("Fname").getAsString();
+	 String Lname = userObject.get("Lname").getAsString();
+	 Integer Age = userObject.get("Age").getAsInt();
+	 String Gender = userObject.get("Gender").getAsString();
+	 String email = userObject.get("email").getAsString();
+	 Integer Phone = userObject.get("Phone").getAsInt();
+	 
+	 userService userObject1 = new userService();
+	 
+	 userObj.setPid(Pid);
+	 userObj.setFname(Fname);
+	 userObj.setLname(Lname);
+	 userObj.setAge(Age);
+	 userObj.setGender(Gender);
+	 userObj.setEmail(email);
+	 userObj.setPhone(Phone);
+	 
+	String output = userObject1.updateUser(userObj);
+	return output;
+	}
+	
+	
 	
 	@DELETE
 	@Path("/")
