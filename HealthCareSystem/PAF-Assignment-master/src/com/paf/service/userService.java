@@ -101,7 +101,7 @@ public class userService {
 		}
 		
 		
-public String updateUser(User user){
+		public String updateUser(User user){
 			
 			String query = "UPDATE user SET Fname=?,Lname=?,Age=?,Gender=?,email=?,Phone=? WHERE Pid=?";
 			

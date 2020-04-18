@@ -19,6 +19,7 @@ import com.paf.service.userService;
 public class userResource {
 	User userObj = new User();
 
+	//read User
 	@GET 
 	@Path("/")
 	@Produces(MediaType.TEXT_HTML)  
@@ -29,12 +30,12 @@ public class userResource {
 		return output;
 		}
 
-	
+	//insert User
 	@POST
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String insertDoctors(String userData){
+	public String insertUsers(String userData){
 	
 		JsonObject userObject = new JsonParser().parse(userData).getAsJsonObject();
 		
@@ -62,12 +63,12 @@ public class userResource {
 		
 	}
 	
-	
+	//Update User
 	@PUT
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String updateUser(String userData)
+	public String updateUsers(String userData)
 	{
 	//Convert the input string to a JSON object
 	 JsonObject userObject = new JsonParser().parse(userData).getAsJsonObject();
@@ -95,12 +96,12 @@ public class userResource {
 	}
 	
 	
-	
+	//Delete User
 	@DELETE
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String deleteItem(String userData){
+	public String deleteUsers(String userData){
 	//Convert the input string to an XML document
 	
 	JsonObject userObject = new JsonParser().parse(userData).getAsJsonObject();
@@ -117,9 +118,5 @@ public class userResource {
 	return output;
 	}
 	
-	
-	
-	
-	
-	
+		
 }
