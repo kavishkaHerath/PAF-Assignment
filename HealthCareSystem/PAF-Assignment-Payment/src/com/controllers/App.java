@@ -1,0 +1,14 @@
+package com.controllers;
+
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+    public static void main( String[] args )
+    {
+        System.out.println( "Hello World!" );
+        new paymentController();
+    }
+}
