@@ -6,7 +6,9 @@ public class Doctor {
 	private String specialization;
 	private int phone;
 	private String email;
+	private String hospitailId;
 
+	
 	public String getdoctorId() {
 		return doctorId;
 	}
@@ -46,5 +48,13 @@ public class Doctor {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public String getHospitailId() {
+		return hospitailId;
+	}
+
+	public void setHospitailId(String hospitailId) {
+		this.hospitailId = hospitailId;
+	}
+
 
 }
