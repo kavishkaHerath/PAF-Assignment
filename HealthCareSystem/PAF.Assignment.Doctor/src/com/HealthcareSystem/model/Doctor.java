@@ -7,8 +7,13 @@ public class Doctor {
 	private int phone;
 	private String email;
 	private String hospitailId;
+	private String availableDay;
+	private String availableTime;
+	private float doctorCharge;
+	
 
 	
+
 	public String getdoctorId() {
 		return doctorId;
 	}
@@ -55,6 +60,33 @@ public class Doctor {
 	public void setHospitailId(String hospitailId) {
 		this.hospitailId = hospitailId;
 	}
+
+
+	public String getAvailableDay() {
+		return availableDay;
+	}
+
+	public void setAvailableDay(String availableDay) {
+		this.availableDay = availableDay;
+	}
+
+	public String getAvailableTime() {
+		return availableTime;
+	}
+
+	public void setAvailableTime(String availableTime) {
+		this.availableTime = availableTime;
+	}
+
+	public float getDoctorCharge() {
+		return doctorCharge;
+	}
+
+	public void setDoctorCharge(float doctorCharge) {
+		this.doctorCharge = doctorCharge;
+	}
+	
+
 
 
 }

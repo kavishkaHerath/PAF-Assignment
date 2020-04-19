@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 import com.HeallthcareSystem.util.DBconnection;
 import com.HealthcareSystem.model.Doctor;
-import com.HealthcareSystem.resources.DoctorResource;
+
 
 public class doctorService {
 	Connection con = null;
@@ -32,8 +32,8 @@ public class doctorService {
 
 			
 			
-			String query = " insert into doctor(`doctorId`,`doctorName`,`specialization`,`phoneNo`,`email`,`hospitalId`)"
-					+ " values (?, ?, ?, ?, ?,?)";
+		String query = " insert into doctor(`doctorId`,`doctorName`,`specialization`,`phoneNo`,`email`,`hospitalId`,`availableDay`,`availableTime`,`doctorCharge`)"
+					+ " values (?, ?, ?, ?, ?,?,?,?,?)";
 
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 			preparedStmt.setString(1, doctor.getdoctorId());
@@ -42,6 +42,10 @@ public class doctorService {
 			preparedStmt.setInt(4, doctor.getPhone());
 			preparedStmt.setString(5, doctor.getEmail());
 			preparedStmt.setString(6, doctor.getHospitailId());
+			preparedStmt.setString(7, doctor.getAvailableDay());
+			preparedStmt.setString(8, doctor.getAvailableTime());
+			preparedStmt.setFloat(9, doctor.getDoctorCharge());
+			
 			preparedStmt.execute();
 
 			output = "Inserted successfully";
@@ -55,10 +59,10 @@ public class doctorService {
 	}
 
 	public String readDoctors() {
-		String output = "";
+		String output = " ";
 		// Prepare the html table to be displayed
 		output = "<table border=\"1\"><tr><th>Doctor ID</th>" + "<th>Doctor Name</th><th>Specialization</th>"
-				+ "<th>Phone No</th>" + "<th>Email</th>" + "<th>Hospital Id</th></tr>";
+				+ "<th>Phone No</th>" + "<th>Email</th>" + "<th>Hospital Id</th> "+ "<th>Available Day</th>" + "<th>Available Time</th>" +"<th>Doctor Charge</th></tr>";
 		
 		try {
 			Connection con = DBconnection.connecter();
@@ -80,14 +84,20 @@ public class doctorService {
 				int phoneNo = results.getInt("phoneNo");
 				String email = results.getString("email");
 				String hospitalId = results.getString("hospitalId");
-
+				String availableDay = results.getString("availableDay");
+				String availableTime = results.getString("availableTime");
+				float doctorCharge = results.getFloat("doctorCharge");
+				
 				// Add into the html table
 				output += "<tr><td>" + doctorId + "</td>";
 				output += "<td>" + doctorName + "</td>";
 				output += "<td>" + specialization + "</td>";
 				output += "<td>" + phoneNo + "</td>";
 				output += "<td>" + email + "</td>";
-				output += "<td>" + hospitalId + "</td>";
+				output += "<td>" + hospitalId +"</td>";
+				output += "<td>" + availableDay +"</td>";
+				output += "<td>" + availableTime +"</td>";
+				output += "<td>" + doctorCharge +"</td>";
 				   
 			}
 
@@ -112,7 +122,7 @@ public class doctorService {
 				return "Error while connecting to the database for updating.";
 			}
 			
-			String query = "UPDATE doctor SET doctorName=?,specialization=?,phoneNo=?,email=?,hospitalId=? WHERE doctorId=?";
+			String query = "UPDATE doctor SET doctorName=?,specialization=?,phoneNo=?,email=?,hospitalId=?,availableDay=?,availableTime=?,doctorCharge=? WHERE doctorId=?";
 			
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 			// binding values
@@ -121,7 +131,10 @@ public class doctorService {
 			preparedStmt.setInt(3, doctor.getPhone());
 			preparedStmt.setString(4, doctor.getEmail());
 			preparedStmt.setString(5, doctor.getHospitailId());
-			preparedStmt.setString(6, doctor.getdoctorId());
+			preparedStmt.setString(6, doctor.getAvailableDay());
+			preparedStmt.setString(7, doctor.getAvailableTime());
+			preparedStmt.setFloat(8, doctor.getDoctorCharge());
+			preparedStmt.setString(9, doctor.getdoctorId());
 			// execute the statement
 			preparedStmt.executeUpdate();
 			
@@ -175,6 +188,64 @@ public class doctorService {
 		return output;
 	}
 
+	
+	public String viewDoctorShedual() {
+		String output = " ";
+		// Prepare the html table to be displayed
+		output = "<table border=\"1\"><tr><th>Doctor Name</th><th>Specialization</th>"+ "<th>Hospital Id</th> "+ "<th>Available Day</th>" + "<th>Available Time</th>" +"<th>Doctor Charge</th></tr>";
+		
+		try {
+			Connection con = DBconnection.connecter();
+			
+			if (con == null) {
+				return "Error while connecting to the database for updating.";
+			}
+			String query = "select * from doctor";
+			
+			Statement stmt = con.createStatement();
+			ResultSet results = stmt.executeQuery(query);
+			
+
+			// iterate through the rows in the result set
+			while (results.next()) {
+				String doctorName = results.getString("doctorName");
+				String specialization = results.getString("specialization");
+				String hospitalId = results.getString("hospitalId");
+				String availableDay = results.getString("availableDay");
+				String availableTime = results.getString("availableTime");
+				float doctorCharge = results.getFloat("doctorCharge");
+				
+				// Add into the html table
+				output += "<tr><td>" + doctorName + "</td>";
+				output += "<td>" + specialization + "</td>";
+				output += "<td>" + hospitalId +"</td>";
+				output += "<td>" + availableDay +"</td>";
+				output += "<td>" + availableTime +"</td>";
+				output += "<td>" + doctorCharge +"</td>";
+				   
+			}
+
+			// Complete the html table
+			output += "</table>";
+		} catch (Exception e) {
+			output = "Error while reading the Doctor.";
+			System.err.println(e.getMessage());
+		}
+		return output;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 }

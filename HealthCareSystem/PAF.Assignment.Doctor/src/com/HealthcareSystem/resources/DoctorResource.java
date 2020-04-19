@@ -5,18 +5,23 @@ import com.HealthcareSystem.model.Doctor;
 
 import java.sql.SQLException;
 
+import javax.annotation.security.RolesAllowed;
 //For REST Service
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 //For JSON
 import com.google.gson.*;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
 
-import com.HealthcareSystem.service.doctor.doctorService;
+
 
 @Path("/Doctors")
 public class DoctorResource {
 	Doctor DocObj = new Doctor();
 
+	@RolesAllowed({"patient","admin"})
 	@GET
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -26,10 +31,11 @@ public class DoctorResource {
 
 		String output = DocObj.readDoctors();
 		return output;
+
 	}
 	
 
-	
+	@RolesAllowed({"patient","admin"})
 	@POST
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -45,7 +51,11 @@ public class DoctorResource {
 		Integer phoneNo = DoctorObj.get("phoneNo").getAsInt();
 		String email = DoctorObj.get("email").getAsString();
 		String hospitalId = DoctorObj.get("hospitalId").getAsString();
-
+		String availableDay = DoctorObj.get("availableDay").getAsString();
+		String availableTime = DoctorObj.get("availableTime").getAsString();
+		Float doctorCharge = DoctorObj.get("doctorCharge").getAsFloat();
+		
+		
 		doctorService doctorobject1 = new doctorService();
 		DocObj.setdoctorId(doctorId);
 		DocObj.setdoctorName(doctorName);
@@ -53,11 +63,14 @@ public class DoctorResource {
 		DocObj.setPhone(phoneNo);
 		DocObj.setEmail(email);
 		DocObj.setHospitailId(hospitalId);
+		DocObj.setAvailableDay(availableDay);
+		DocObj.setAvailableTime(availableTime);
+		DocObj.setDoctorCharge(doctorCharge);
 
 		String output = doctorobject1.insertDoctors(DocObj);
 		return output;
 	}
-
+	@RolesAllowed({"patient","admin"})
 	@PUT
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -73,19 +86,27 @@ public class DoctorResource {
 		Integer phoneNo = DoctorObj.get("phoneNo").getAsInt();
 		String email = DoctorObj.get("email").getAsString();
 		String hospitalId = DoctorObj.get("hospitalId").getAsString();
+		String availableDay = DoctorObj.get("availableDay").getAsString();
+		String availableTime = DoctorObj.get("availableTime").getAsString();
+		Float doctorCharge = DoctorObj.get("doctorCharge").getAsFloat();
+		
 
 		doctorService doctorobject2 = new doctorService();
+		
 		DocObj.setdoctorId(doctorId);
 		DocObj.setdoctorName(doctorName);
 		DocObj.setSpecialization(specialization);
 		DocObj.setPhone(phoneNo);
 		DocObj.setEmail(email);
 		DocObj.setHospitailId(hospitalId);
+		DocObj.setAvailableDay(availableDay);
+		DocObj.setAvailableTime(availableTime);
+		DocObj.setDoctorCharge(doctorCharge);
 
 		String output = doctorobject2.updateDoctors(DocObj);
 		return output;
 	}
-
+	@RolesAllowed({"patient","admin"})
 	@DELETE
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -101,4 +122,20 @@ public class DoctorResource {
 		String output = doctorobject3.deleteDoctors(DocObj);
 		return output;
 	}
+	@RolesAllowed({"patient","admin"})
+	@GET
+	@Path("/shedual")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_HTML)
+	public String viewDoctorShedual() {
+		doctorService DocObj = new doctorService();
+
+		
+		
+		
+		String output = DocObj.viewDoctorShedual();
+		return output;
+	}
+	
+	
 }
