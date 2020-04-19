@@ -1,8 +1,10 @@
 package com.paf.service;
 
+
 import java.sql.*;
 import com.paf.utils.DBConnection;
 import com.paf.model.*;
+
 
 
 
@@ -53,7 +55,7 @@ public class HospitalService {
 	 if (con == null)
 	 {return "Error while connecting to the database for reading."; }
 	 // Prepare the html table to be displayed
-	 output = "<table border=\"1\"><tr><th>Hos.ID</th><th>Hospital Name</th><th>Address</th><th>Hospital Phone</th><th>Email</th><th>Hospital Charge</th><th>Update</th><th>Remove</th></tr>";
+	 output = "<table border=\"1\"><tr><th>Hos.ID</th><th>Hospital Name</th><th>Address</th><th>Hospital Phone</th><th>Email</th><th>Hospital Charge</th></tr>";
 	 String query = "select * from hospital";
 	 Statement stmt = con.createStatement();
 	 ResultSet rs = stmt.executeQuery(query);
@@ -73,10 +75,7 @@ public class HospitalService {
 		 output += "<td>" + hPhone + "</td>";
 		 output += "<td>" + hEmail + "</td>";
 		 output += "<td>" + hCharge + "</td>";
-	 // buttons
-		 output += "<td><input name=\"btnUpdate\" type=\"button\"value=\"Update\" class=\"btn btn-secondary\"></td>"+ "<td><form method=\"post\" action=\"items.jsp\">"+ "<input name=\"btnRemove\" type=\"submit\" value=\"Remove\"class=\"btn btn-danger\">"
-				 + "<input name=\"hId\" type=\"hidden\" value=\"" + hId
-				 + "\">" + "</form></td></tr>";
+	 
 	 }
 	 con.close();
 	 // Complete the html table
